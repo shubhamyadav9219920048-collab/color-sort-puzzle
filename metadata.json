@@ -1,0 +1,6 @@
+{
+  "name": "Color Sort Puzzle",
+  "description": "Premium mobile Color Sort Puzzle game with 100 levels, liquid pouring animations, coin rewards, and boosters.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

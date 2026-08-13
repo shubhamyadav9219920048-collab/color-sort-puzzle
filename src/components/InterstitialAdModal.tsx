@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Tv, Sparkles, X, Volume2, ShieldCheck, Play, Trophy } from 'lucide-react';
+import { Tv, X, ShieldCheck, Trophy } from 'lucide-react';
 import { soundEngine } from '../lib/sound';
-import { admobService } from '../lib/admob';
+import { ADMOB_TEST_UNITS } from '../lib/admob';
 
 interface InterstitialAdModalProps {
   onClose: () => void;
@@ -11,7 +11,6 @@ interface InterstitialAdModalProps {
 export const InterstitialAdModal: React.FC<InterstitialAdModalProps> = ({ onClose }) => {
   const [countdown, setCountdown] = useState<number>(3);
   const [canSkip, setCanSkip] = useState<boolean>(false);
-  const config = admobService.getConfig();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -45,7 +44,7 @@ export const InterstitialAdModal: React.FC<InterstitialAdModalProps> = ({ onClos
         <div className="w-full flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[10px] font-black uppercase text-indigo-300 bg-indigo-500/20 px-2.5 py-1 rounded-full border border-indigo-500/40">
             <Tv className="w-3.5 h-3.5" />
-            <span>AdMob Interstitial</span>
+            <span>AdMob Interstitial Test Ad</span>
           </div>
 
           <button
@@ -70,10 +69,13 @@ export const InterstitialAdModal: React.FC<InterstitialAdModalProps> = ({ onClos
           </div>
 
           <div className="flex flex-col items-center gap-1">
-            <h3 className="text-lg font-black text-white">Level Milestone Reached!</h3>
+            <h3 className="text-lg font-black text-white">5 Levels Milestone Completed!</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Great sorting! Sponsored by AdMob Ads.
+              Awesome sorting skills! Sponsored by Google AdMob Ads.
             </p>
+            <span className="text-[10px] font-mono text-indigo-300/80 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800/50 mt-1">
+              Unit: {ADMOB_TEST_UNITS.INTERSTITIAL}
+            </span>
           </div>
 
           {/* Progress Bar */}
@@ -98,11 +100,11 @@ export const InterstitialAdModal: React.FC<InterstitialAdModalProps> = ({ onClos
           onClick={handleClose}
           className={`w-full py-3 rounded-2xl font-black text-xs flex items-center justify-center gap-2 transition-all ${
             canSkip
-              ? 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/30 active:scale-95'
-              : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+              ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/30 active:scale-95'
+              : 'bg-slate-800 text-slate-400 border border-slate-700'
           }`}
         >
-          {canSkip ? 'CONTINUE TO NEXT LEVEL' : `SKIP IN ${countdown}s`}
+          {canSkip ? 'CONTINUE GAME' : `NEXT LEVEL IN ${countdown}S`}
         </button>
       </motion.div>
     </div>

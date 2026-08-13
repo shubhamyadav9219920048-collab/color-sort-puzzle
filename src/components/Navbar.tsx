@@ -18,6 +18,7 @@ import {
   FastForward,
   Sparkles,
   User,
+  Home,
 } from 'lucide-react';
 import { soundEngine } from '../lib/sound';
 
@@ -53,6 +54,7 @@ interface NavbarProps {
   onOpenLeaderboard?: () => void;
   onOpenRewardedAds: () => void;
   onToggleFrame: () => void;
+  onGoHome?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -86,13 +88,28 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenLeaderboard,
   onOpenRewardedAds,
   onToggleFrame,
+  onGoHome,
 }) => {
   return (
     <header className="w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-3 py-2.5 flex flex-col gap-2 shadow-lg z-30">
       {/* Top Row: Map, Chapter/Level Badge, Daily Bonus, Free Ads, Coins, Menu Buttons */}
       <div className="flex items-center justify-between gap-1.5 sm:gap-2">
         {/* Left: Level Select & Level Info */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
+          {onGoHome && (
+            <button
+              onClick={() => {
+                soundEngine.playSelect();
+                onGoHome();
+              }}
+              className="flex items-center gap-1 px-2 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold text-xs border border-amber-500/30 transition-all active:scale-95 shadow-sm"
+              title="Return to Home Screen"
+            >
+              <Home className="w-4 h-4 text-amber-400" />
+              <span className="hidden sm:inline">Home</span>
+            </button>
+          )}
+
           <button
             onClick={() => {
               soundEngine.playSelect();
@@ -115,163 +132,157 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Center/Right: Daily Challenge, Daily Reward, Watch Ad, Coins & Navigation Controls */}
-        <div className="flex items-center gap-1.5">
-          {/* Daily Challenge Button */}
-          <button
-            onClick={() => {
-              soundEngine.playSelect();
-              onOpenDailyChallenge();
-            }}
-            className="relative p-2 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 text-purple-300 border border-purple-500/40 transition-all active:scale-95 flex items-center gap-1"
-            title="Daily Challenge Mode"
-          >
-            <Flame className="w-4 h-4 text-purple-400 fill-purple-400/20" />
-            <span className="text-[11px] font-black hidden md:inline">Challenge</span>
-            {!isDailyChallengeCompletedToday && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full animate-ping" />
-            )}
-            {!isDailyChallengeCompletedToday && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full" />
-            )}
-          </button>
-
-          {/* Daily Reward Button */}
-          <button
-            onClick={() => {
-              soundEngine.playSelect();
-              onOpenDailyRewards();
-            }}
-            className="relative p-2 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 hover:from-amber-500/30 hover:to-yellow-500/30 text-amber-300 border border-amber-500/40 transition-all active:scale-95 flex items-center gap-1"
-            title="Daily Bonus Rewards"
-          >
-            <Calendar className="w-4 h-4 text-amber-400" />
-            <span className="text-[11px] font-black hidden sm:inline">Daily</span>
-            {!isDailyClaimedToday && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-rose-500 rounded-full animate-ping" />
-            )}
-            {!isDailyClaimedToday && (
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-rose-500 rounded-full" />
-            )}
-          </button>
-
-          {/* Coins Counter */}
-          <button
-            onClick={() => {
-              soundEngine.playSelect();
-              onOpenShop();
-            }}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 font-extrabold text-xs shadow-inner transition-all hover:bg-amber-500/20 active:scale-95"
-          >
-            <Coins className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>{coins}</span>
-          </button>
-
-          {/* Player Profile Button */}
-          {onOpenProfile && (
+        <div className="flex items-center gap-1 sm:gap-1.5 min-w-0">
+          {/* Scrollable middle status items */}
+          <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto no-scrollbar py-0.5 max-w-full">
+            {/* Daily Challenge Button */}
             <button
               onClick={() => {
                 soundEngine.playSelect();
-                onOpenProfile();
+                onOpenDailyChallenge();
               }}
-              className="p-2 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500/30 hover:to-blue-500/30 text-cyan-300 border border-cyan-500/40 transition-all active:scale-95 flex items-center gap-1"
-              title="Player Profile"
+              className="relative p-2 rounded-xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 text-purple-300 border border-purple-500/40 transition-all active:scale-95 flex items-center gap-1 shrink-0"
+              title="Daily Challenge Mode"
             >
-              <User className="w-4 h-4 text-cyan-400" />
-              <span className="text-[11px] font-black hidden md:inline">Profile</span>
-            </button>
-          )}
-
-          {/* Stats Button */}
-          <button
-            onClick={() => {
-              soundEngine.playSelect();
-              onOpenStats();
-            }}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-cyan-500/30 transition-all active:scale-95"
-            title="Career Statistics"
-          >
-            <BarChart3 className="w-4 h-4" />
-          </button>
-
-          {/* Lucky Spin Wheel */}
-          {onOpenLuckySpin && (
-            <button
-              onClick={() => {
-                soundEngine.playSelect();
-                onOpenLuckySpin();
-              }}
-              className="relative p-2 rounded-xl bg-gradient-to-br from-amber-500/20 to-yellow-500/20 hover:from-amber-500/30 hover:to-yellow-500/30 text-amber-300 border border-amber-500/40 transition-all active:scale-95"
-              title="Lucky Spin Wheel"
-            >
-              <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '6s' }} />
-              {isLuckySpinReady && (
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 rounded-full border-2 border-slate-900 animate-ping" />
+              <Flame className="w-4 h-4 text-purple-400 fill-purple-400/20" />
+              <span className="text-[11px] font-black hidden md:inline">Challenge</span>
+              {!isDailyChallengeCompletedToday && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full animate-ping" />
+              )}
+              {!isDailyChallengeCompletedToday && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-purple-500 rounded-full" />
               )}
             </button>
-          )}
 
-          {/* Shop */}
-          <button
-            onClick={() => {
-              soundEngine.playSelect();
-              onOpenShop();
-            }}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-400 border border-purple-500/30 transition-all active:scale-95"
-            title="Shop & Customization"
-          >
-            <ShoppingBag className="w-4 h-4" />
-          </button>
-
-          {/* Leaderboards */}
-          {onOpenLeaderboard && (
+            {/* Daily Reward Button */}
             <button
               onClick={() => {
                 soundEngine.playSelect();
-                onOpenLeaderboard();
+                onOpenDailyRewards();
               }}
-              className="p-2 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 hover:from-amber-500/30 hover:to-yellow-500/30 text-amber-300 border border-amber-500/40 transition-all active:scale-95 flex items-center gap-1"
-              title="Global & Country Leaderboards"
+              className="relative p-2 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 hover:from-amber-500/30 hover:to-yellow-500/30 text-amber-300 border border-amber-500/40 transition-all active:scale-95 flex items-center gap-1 shrink-0"
+              title="Daily Bonus Rewards"
             >
-              <Trophy className="w-4 h-4 text-amber-400" />
-              <span className="text-[11px] font-black hidden lg:inline">Ranks</span>
+              <Calendar className="w-4 h-4 text-amber-400" />
+              <span className="text-[11px] font-black hidden sm:inline">Daily</span>
+              {!isDailyClaimedToday && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-rose-500 rounded-full animate-ping" />
+              )}
+              {!isDailyClaimedToday && (
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-rose-500 rounded-full" />
+              )}
             </button>
-          )}
 
-          {/* Achievements */}
-          <button
-            onClick={() => {
-              soundEngine.playSelect();
-              onOpenAchievements();
-            }}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 transition-all active:scale-95"
-            title="Trophies & Achievements"
-          >
-            <Trophy className="w-4 h-4" />
-          </button>
+            {/* Coins Counter */}
+            <button
+              onClick={() => {
+                soundEngine.playSelect();
+                onOpenShop();
+              }}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 font-extrabold text-xs shadow-inner transition-all hover:bg-amber-500/20 active:scale-95 shrink-0"
+            >
+              <Coins className="w-4 h-4 text-amber-400 animate-pulse" />
+              <span>{coins}</span>
+            </button>
 
-          {/* Settings */}
-          <button
-            onClick={() => {
-              soundEngine.playSelect();
-              onOpenSettings();
-            }}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-all active:scale-95"
-            title="Settings & Guide"
-          >
-            <Settings className="w-4 h-4" />
-          </button>
+            {/* Player Profile Button */}
+            {onOpenProfile && (
+              <button
+                onClick={() => {
+                  soundEngine.playSelect();
+                  onOpenProfile();
+                }}
+                className="p-2 rounded-xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 hover:from-cyan-500/30 hover:to-blue-500/30 text-cyan-300 border border-cyan-500/40 transition-all active:scale-95 flex items-center gap-1 shrink-0"
+                title="Player Profile"
+              >
+                <User className="w-4 h-4 text-cyan-400" />
+                <span className="text-[11px] font-black hidden md:inline">Profile</span>
+              </button>
+            )}
 
-          {/* Toggle Android Device Frame View */}
-          <button
-            onClick={() => {
-              soundEngine.playSelect();
-              onToggleFrame();
-            }}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/20 transition-all active:scale-95 hidden sm:flex"
-            title={isAndroidFrame ? 'Full Screen View' : 'Android Frame View'}
-          >
-            {isAndroidFrame ? <Maximize2 className="w-4 h-4" /> : <Smartphone className="w-4 h-4" />}
-          </button>
+            {/* Lucky Spin Wheel */}
+            {onOpenLuckySpin && (
+              <button
+                onClick={() => {
+                  soundEngine.playSelect();
+                  onOpenLuckySpin();
+                }}
+                className="relative p-2 rounded-xl bg-gradient-to-br from-amber-500/20 to-yellow-500/20 hover:from-amber-500/30 hover:to-yellow-500/30 text-amber-300 border border-amber-500/40 transition-all active:scale-95 shrink-0"
+                title="Lucky Spin Wheel"
+              >
+                <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '6s' }} />
+                {isLuckySpinReady && (
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 rounded-full border-2 border-slate-900 animate-ping" />
+                )}
+              </button>
+            )}
+
+            {/* Shop */}
+            <button
+              onClick={() => {
+                soundEngine.playSelect();
+                onOpenShop();
+              }}
+              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-purple-400 border border-purple-500/30 transition-all active:scale-95 shrink-0"
+              title="Shop & Customization"
+            >
+              <ShoppingBag className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Top Right Pinned Action Icons: Leaderboards, Achievements, Settings, Frame */}
+          <div className="flex items-center gap-1 shrink-0">
+            {/* Leaderboards */}
+            {onOpenLeaderboard && (
+              <button
+                onClick={() => {
+                  soundEngine.playSelect();
+                  onOpenLeaderboard();
+                }}
+                className="p-2 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 hover:from-amber-500/30 hover:to-yellow-500/30 text-amber-300 border border-amber-500/40 transition-all active:scale-95 flex items-center gap-1 shrink-0"
+                title="Global & Country Leaderboards"
+              >
+                <Trophy className="w-4 h-4 text-amber-400" />
+                <span className="text-[11px] font-black hidden xl:inline">Ranks</span>
+              </button>
+            )}
+
+            {/* Achievements */}
+            <button
+              onClick={() => {
+                soundEngine.playSelect();
+                onOpenAchievements();
+              }}
+              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/30 transition-all active:scale-95 shrink-0"
+              title="Trophies & Achievements"
+            >
+              <Sparkles className="w-4 h-4" />
+            </button>
+
+            {/* Top Right Gear Icon: Settings */}
+            <button
+              onClick={() => {
+                soundEngine.playSelect();
+                onOpenSettings();
+              }}
+              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:border-cyan-500/50 transition-all active:scale-95 shadow-md shrink-0"
+              title="Settings & Privacy"
+            >
+              <Settings className="w-4 h-4 text-cyan-400 animate-spin-slow" />
+            </button>
+
+            {/* Toggle Android Device Frame View */}
+            <button
+              onClick={() => {
+                soundEngine.playSelect();
+                onToggleFrame();
+              }}
+              className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/20 transition-all active:scale-95 hidden sm:flex shrink-0"
+              title={isAndroidFrame ? 'Full Screen View' : 'Android Frame View'}
+            >
+              {isAndroidFrame ? <Maximize2 className="w-4 h-4" /> : <Smartphone className="w-4 h-4" />}
+            </button>
+          </div>
         </div>
       </div>
 

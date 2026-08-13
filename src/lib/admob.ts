@@ -1,3 +1,6 @@
+import { Capacitor } from '@capacitor/core';
+import { AdMob, BannerAdSize, BannerAdPosition } from '@capacitor-community/admob';
+
 export interface AdMobUnitConfig {
   appOpenId: string;
   bannerId: string;
@@ -6,24 +9,32 @@ export interface AdMobUnitConfig {
   testMode: boolean;
 }
 
-// Official AdMob Production & Test Ad Unit IDs
+// Official Google AdMob Test Ad Unit IDs for Android
+export const ADMOB_TEST_UNITS = {
+  APP_OPEN: 'ca-app-pub-3940256099942544/9257390723',
+  BANNER: 'ca-app-pub-3940256099942544/6300978111',
+  INTERSTITIAL: 'ca-app-pub-3940256099942544/1033173712',
+  REWARDED: 'ca-app-pub-3940256099942544/5224354917',
+} as const;
+
 export const DEFAULT_ADMOB_CONFIG: AdMobUnitConfig = {
-  appOpenId: 'ca-app-pub-3940256099942544/3419835294',
-  bannerId: 'ca-app-pub-3940256099942544/6300978111',
-  interstitialId: 'ca-app-pub-3940256099942544/1033173712',
-  rewardedId: 'ca-app-pub-3940256099942544/5224354917',
-  testMode: false,
+  appOpenId: ADMOB_TEST_UNITS.APP_OPEN,
+  bannerId: ADMOB_TEST_UNITS.BANNER,
+  interstitialId: ADMOB_TEST_UNITS.INTERSTITIAL,
+  rewardedId: ADMOB_TEST_UNITS.REWARDED,
+  testMode: true,
 };
 
 class AdMobService {
   private config: AdMobUnitConfig = { ...DEFAULT_ADMOB_CONFIG };
-  private levelsCompletedSinceLastInterstitial: number = 0;
+  private completedLevelsCount: number = 0;
   private appOpenAdShown: boolean = false;
   private isBannerVisible: boolean = true;
-  private isAdLoading: boolean = false;
+  private isInitialized: boolean = false;
 
   constructor() {
     this.loadSavedConfig();
+    this.initNativeAdMob();
   }
 
   private loadSavedConfig() {
@@ -32,8 +43,20 @@ class AdMobService {
       if (saved) {
         this.config = { ...DEFAULT_ADMOB_CONFIG, ...JSON.parse(saved) };
       }
-    } catch (e) {
-      console.error('Failed to load AdMob config', e);
+    } catch (e) {}
+  }
+
+  private async initNativeAdMob() {
+    if (Capacitor.isNativePlatform() && !this.isInitialized) {
+      try {
+        await AdMob.initialize({
+          initializeForTesting: this.config.testMode,
+        });
+        this.isInitialized = true;
+        console.log('[AdMob Native] Initialized successfully');
+      } catch (e) {
+        console.warn('[AdMob Native] Init warning:', e);
+      }
     }
   }
 
@@ -41,27 +64,8 @@ class AdMobService {
     return { ...this.config };
   }
 
-  public updateConfig(newConfig: Partial<AdMobUnitConfig>) {
-    this.config = { ...this.config, ...newConfig };
-    try {
-      localStorage.setItem('admob_config', JSON.stringify(this.config));
-    } catch (e) {
-      console.error('Failed to save AdMob config', e);
-    }
-  }
-
-  /**
-   * Initializes AdMob SDK for Web / Native Bridge.
-   */
-  public async initialize(): Promise<boolean> {
-    this.isAdLoading = true;
-    return new Promise((resolve) => {
-      // Simulate fast background ad preloading (100-300ms)
-      setTimeout(() => {
-        this.isAdLoading = false;
-        resolve(true);
-      }, 250);
-    });
+  public isNative(): boolean {
+    return Capacitor.isNativePlatform();
   }
 
   public hasAppOpenAdBeenShown(): boolean {
@@ -73,12 +77,12 @@ class AdMobService {
   }
 
   /**
-   * Called on level win. Returns true if interstitial should show (every 3 levels).
+   * Called on level win. Returns true if interstitial should show (every 5 levels).
    */
   public recordLevelCompleted(): boolean {
-    this.levelsCompletedSinceLastInterstitial += 1;
-    if (this.levelsCompletedSinceLastInterstitial >= 3) {
-      this.levelsCompletedSinceLastInterstitial = 0;
+    this.completedLevelsCount += 1;
+    if (this.completedLevelsCount >= 5) {
+      this.completedLevelsCount = 0;
       return true;
     }
     return false;
@@ -86,6 +90,68 @@ class AdMobService {
 
   public setBannerVisible(visible: boolean) {
     this.isBannerVisible = visible;
+    if (Capacitor.isNativePlatform()) {
+      if (visible) {
+        this.showNativeBanner();
+      } else {
+        this.hideNativeBanner();
+      }
+    }
+  }
+
+  public async showNativeBanner(): Promise<void> {
+    if (!Capacitor.isNativePlatform()) return;
+    try {
+      await AdMob.showBanner({
+        adId: this.config.bannerId,
+        adSize: BannerAdSize.BANNER,
+        position: BannerAdPosition.BOTTOM_CENTER,
+        margin: 0,
+        isTesting: this.config.testMode,
+      });
+    } catch (err) {
+      console.warn('[AdMob Native] Show banner error:', err);
+    }
+  }
+
+  public async hideNativeBanner(): Promise<void> {
+    if (!Capacitor.isNativePlatform()) return;
+    try {
+      await AdMob.hideBanner();
+    } catch (err) {
+      console.warn('[AdMob Native] Hide banner error:', err);
+    }
+  }
+
+  public async showNativeInterstitial(): Promise<void> {
+    if (!Capacitor.isNativePlatform()) return;
+    try {
+      await AdMob.prepareInterstitial({
+        adId: this.config.interstitialId,
+        isTesting: this.config.testMode,
+      });
+      await AdMob.showInterstitial();
+    } catch (err) {
+      console.warn('[AdMob Native] Interstitial error:', err);
+    }
+  }
+
+  public async showNativeRewarded(onRewarded: () => void): Promise<void> {
+    if (!Capacitor.isNativePlatform()) {
+      onRewarded();
+      return;
+    }
+    try {
+      await AdMob.prepareRewardVideoAd({
+        adId: this.config.rewardedId,
+        isTesting: this.config.testMode,
+      });
+      await AdMob.showRewardVideoAd();
+      onRewarded();
+    } catch (err) {
+      console.warn('[AdMob Native] Rewarded error, completing reward:', err);
+      onRewarded();
+    }
   }
 
   public getIsBannerVisible(): boolean {

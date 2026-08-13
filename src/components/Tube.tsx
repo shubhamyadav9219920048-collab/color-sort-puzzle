@@ -18,6 +18,7 @@ interface TubeProps {
 }
 
 export const Tube: React.FC<TubeProps> = ({
+  id,
   colors,
   isSelected,
   isPourSource,
@@ -129,7 +130,7 @@ export const Tube: React.FC<TubeProps> = ({
         <div className="w-full h-full flex flex-col justify-end gap-0.5 rounded-b-[1.75rem] overflow-hidden relative">
           {/* Empty space slots filler */}
           {Array.from({ length: emptySlots }).map((_, idx) => (
-            <div key={`empty-${idx}`} className="flex-1 w-full bg-transparent" />
+            <div key={`tube-${id ?? 0}-empty-${idx}`} className="flex-1 w-full bg-transparent" />
           ))}
 
           {/* Color Layers (rendered top to bottom) */}
@@ -143,7 +144,7 @@ export const Tube: React.FC<TubeProps> = ({
 
               return (
                 <motion.div
-                  key={`liquid-${colors.length - 1 - idx}-${colorId}`}
+                  key={`tube-${id ?? 0}-layer-${colors.length - 1 - idx}-${colorId}-${idx}`}
                   layout
                   initial={{ scaleY: 0 }}
                   animate={{ scaleY: 1 }}

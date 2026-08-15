@@ -12,13 +12,13 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: "22.20.0"
 
       - run: node -v
       - run: npm install
       - run: npm run build
 
-      - run: npm install -g @capacitor/cli
+      - run: npm install -g @capacitor/cli@latest
 
       - run: npx cap sync android
 

@@ -14,10 +14,10 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm install
+      - run: npm install --force
       - run: npm run build
 
-      - run: npm install @capacitor/cli @capacitor/core @capacitor/android
+      - run: npm install @capacitor/cli@latest @capacitor/core@latest @capacitor/android@latest --force
 
       - run: npx cap add android
       - run: npx cap sync android

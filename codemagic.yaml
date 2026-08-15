@@ -6,7 +6,6 @@ workflows:
     environment:
       node: 20.x
       java: 17
-      android_sdk: 34
     scripts:
       - name: Install Node.js dependencies
         script: |

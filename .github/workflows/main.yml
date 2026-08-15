@@ -18,7 +18,7 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - run: npm install -g @capacitor/cli@latest
+      - run: npm install -g @capacitor/cli
 
       - run: npx cap sync android
 

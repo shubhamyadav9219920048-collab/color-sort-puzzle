@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Test Tube Icon -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M44,24 h20 v6 h-4 v38 a10,10 0 0,1 -20,0 v-38 h-4 z" />
+    <path
+        android:fillColor="#3B82F6"
+        android:pathData="M48,46 h12 v16 a6,6 0 0,1 -12,0 z" />
+    <path
+        android:fillColor="#EC4899"
+        android:pathData="M48,60 h12 v4 a6,6 0 0,1 -12,0 z" />
+</vector>

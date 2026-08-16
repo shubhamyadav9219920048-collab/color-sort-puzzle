@@ -41,8 +41,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Make Gradle wrapper executable
-        run: chmod +x android/gradlew
+      - name: Make Gradle wrapper executable and verify wrapper jar
+        run: |
+          chmod +x android/gradlew
+          if [ ! -f "android/gradle/wrapper/gradle-wrapper.jar" ]; then
+            echo "Wrapper jar missing, downloading..."
+            mkdir -p android/gradle/wrapper
+            curl -sSL -o android/gradle/wrapper/gradle-wrapper.jar "https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradle/wrapper/gradle-wrapper.jar"
+          fi
 
       - name: Build Android Release APK
         run: |

@@ -67,6 +67,16 @@ esac
 
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
+if [ ! -f "$CLASSPATH" ]; then
+    echo "gradle-wrapper.jar not found at $CLASSPATH, downloading..."
+    mkdir -p "$APP_HOME/gradle/wrapper"
+    if command -v curl >/dev/null 2>&1; then
+        curl -sSL -o "$CLASSPATH" "https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradle/wrapper/gradle-wrapper.jar"
+    elif command -v wget >/dev/null 2>&1; then
+        wget -q -O "$CLASSPATH" "https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradle/wrapper/gradle-wrapper.jar"
+    fi
+fi
+
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then

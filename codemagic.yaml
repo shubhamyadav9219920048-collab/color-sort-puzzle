@@ -21,6 +21,10 @@ workflows:
           cd android
           if [ -f "gradlew" ]; then
             chmod +x gradlew
+            if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
+              mkdir -p gradle/wrapper
+              curl -sSL -o gradle/wrapper/gradle-wrapper.jar "https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradle/wrapper/gradle-wrapper.jar"
+            fi
             ./gradlew assembleRelease
           else
             gradle assembleRelease

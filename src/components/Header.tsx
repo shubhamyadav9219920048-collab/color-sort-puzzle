@@ -168,19 +168,41 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => handleNavClick(undefined, '/blog')}
-            className={`px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 xl:px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all flex items-center gap-1.5 ${
               location.pathname.startsWith('/blog') 
                 ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20' 
                 : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Blog (20+)</span>
+            <span>Blog (30)</span>
+          </button>
+
+          <button
+            onClick={() => handleNavClick(undefined, '/tips')}
+            className={`px-2.5 xl:px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all ${
+              location.pathname === '/tips' 
+                ? 'text-amber-400 bg-amber-500/10 border border-amber-500/20' 
+                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+            }`}
+          >
+            Tips &amp; Tricks
+          </button>
+
+          <button
+            onClick={() => handleNavClick(undefined, '/news')}
+            className={`px-2.5 xl:px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all ${
+              location.pathname === '/news' 
+                ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20' 
+                : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+            }`}
+          >
+            News
           </button>
 
           <button
             onClick={() => handleNavClick('how-to-play', '/how-to-play')}
-            className={`px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all ${
+            className={`px-2.5 xl:px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all ${
               location.pathname === '/how-to-play' 
                 ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20' 
                 : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
@@ -191,7 +213,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => handleNavClick('about', '/about')}
-            className={`px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all ${
+            className={`px-2.5 xl:px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all ${
               location.pathname === '/about' 
                 ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20' 
                 : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
@@ -209,7 +231,7 @@ export const Header: React.FC<HeaderProps> = ({
                 handleNavClick('contact', '/contact');
               }
             }}
-            className={`px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all ${
+            className={`px-2.5 xl:px-3 py-1.5 rounded-xl font-bold text-xs xl:text-sm transition-all ${
               location.pathname === '/contact' 
                 ? 'text-cyan-400 bg-cyan-500/10 border border-cyan-500/20' 
                 : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
@@ -354,7 +376,23 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left font-bold text-sm text-slate-200 hover:bg-slate-900 hover:text-cyan-400 transition-colors"
             >
               <BookOpen className="w-4 h-4 text-purple-400" />
-              <span>Blog &amp; Knowledge Hub (20 Articles)</span>
+              <span>Blog &amp; Knowledge Hub (30 Articles)</span>
+            </button>
+
+            <button
+              onClick={() => handleNavClick(undefined, '/tips')}
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left font-bold text-sm text-slate-200 hover:bg-slate-900 hover:text-amber-400 transition-colors"
+            >
+              <Zap className="w-4 h-4 text-amber-400" />
+              <span>Tips &amp; Tricks Guide</span>
+            </button>
+
+            <button
+              onClick={() => handleNavClick(undefined, '/news')}
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-left font-bold text-sm text-slate-200 hover:bg-slate-900 hover:text-cyan-400 transition-colors"
+            >
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span>News &amp; Updates</span>
             </button>
 
             <button

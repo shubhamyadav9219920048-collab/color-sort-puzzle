@@ -127,7 +127,23 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContactModal }) => {
                   to="/blog"
                   className="text-slate-400 hover:text-cyan-300 transition-colors"
                 >
-                  Blog &amp; Articles (20)
+                  Blog &amp; Articles (30)
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/news"
+                  className="text-slate-400 hover:text-cyan-300 transition-colors"
+                >
+                  News &amp; Updates
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/tips"
+                  className="text-slate-400 hover:text-cyan-300 transition-colors"
+                >
+                  Tips &amp; Tricks Guide
                 </Link>
               </li>
               <li>

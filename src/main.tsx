@@ -24,10 +24,13 @@ import { SearchResultsPage } from './pages/SearchResultsPage';
 import { FavoritesPage } from './pages/FavoritesPage';
 import { RecentlyPlayedPage } from './pages/RecentlyPlayedPage';
 import { GameStatsPage } from './pages/GameStatsPage';
+import { NewsPage } from './pages/NewsPage';
+import { TipsTricksPage } from './pages/TipsTricksPage';
 
 // Shared Components
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
 import { GlobalSearchModal } from './components/GlobalSearchModal';
 import { FavoritesModal } from './components/FavoritesModal';
 import { RecentlyPlayedModal } from './components/RecentlyPlayedModal';
@@ -187,9 +190,13 @@ export const RootApplication: React.FC = () => {
             element={<GameStatsPage userProgress={userProgress} />} 
           />
 
-          {/* Game Guide, About, Legal, FAQ */}
+          {/* Game Guide, About, Legal, FAQ, News, Tips */}
           <Route path="/how-to-play" element={<HowToPlayPage />} />
           <Route path="/guide" element={<HowToPlayPage />} />
+          <Route path="/game-guide" element={<HowToPlayPage />} />
+          <Route path="/tips" element={<TipsTricksPage />} />
+          <Route path="/tips-tricks" element={<TipsTricksPage />} />
+          <Route path="/news" element={<NewsPage />} />
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
@@ -206,6 +213,9 @@ export const RootApplication: React.FC = () => {
       {!isPlayPage && (
         <Footer onOpenContactModal={() => setIsContactOpen(true)} />
       )}
+
+      {/* Global Scroll to Top Button */}
+      <ScrollToTopButton />
 
       {/* Global Interactive Modals */}
       <GlobalSearchModal

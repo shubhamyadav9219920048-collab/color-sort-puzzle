@@ -1,6 +1,7 @@
 import { BlogArticle } from './blogCategories';
+import { BLOG_ARTICLES_MORE } from './blogArticlesMore';
 
-export const BLOG_ARTICLES: BlogArticle[] = [
+const BASE_BLOG_ARTICLES: BlogArticle[] = [
   {
     id: '1',
     slug: 'neuroscience-of-water-sorting-brain-pathways',
@@ -1375,6 +1376,11 @@ Aerobic exercise (such as a brisk 20-minute walk or cycling) releases **Brain-De
       'daily-habit-stacking-brain-exercises',
     ],
   },
+];
+
+export const BLOG_ARTICLES: BlogArticle[] = [
+  ...BASE_BLOG_ARTICLES,
+  ...BLOG_ARTICLES_MORE,
 ];
 
 export function getArticleBySlug(slug: string): BlogArticle | undefined {

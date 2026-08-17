@@ -48,6 +48,28 @@ export interface UserAccount {
   provider?: 'google' | 'guest';
 }
 
+export interface FavoriteGameItem {
+  id: string;
+  type: 'mode' | 'level' | 'article';
+  title: string;
+  category?: string;
+  link: string;
+  addedAt: string;
+  iconName?: string;
+}
+
+export interface RecentlyPlayedItem {
+  id: string;
+  type: 'level' | 'daily' | 'speedrun' | 'zen';
+  title: string;
+  subtitle?: string;
+  timestamp: string;
+  stars?: number;
+  moves?: number;
+  completed: boolean;
+  levelId?: number;
+}
+
 export interface UserProgress {
   coins: number;
   currentLevel: number;
@@ -75,6 +97,8 @@ export interface UserProgress {
   lastLuckySpinDate?: string | null;
   dailyStreak: number;
   dailyChallenge: DailyChallengeState;
+  favorites?: FavoriteGameItem[];
+  recentlyPlayed?: RecentlyPlayedItem[];
   stats: {
     levelsCompleted: number;
     totalPours: number;

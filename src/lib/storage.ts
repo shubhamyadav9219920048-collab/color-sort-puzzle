@@ -63,6 +63,39 @@ export const INITIAL_PROGRESS: UserProgress = {
     hardCompleted: 0,
     expertCompleted: 0,
   },
+  favorites: [
+    {
+      id: 'mode-classic',
+      type: 'mode',
+      title: '500 Level Campaign',
+      category: 'Game Modes',
+      link: '/play',
+      addedAt: new Date().toISOString(),
+      iconName: 'Gamepad2',
+    },
+    {
+      id: 'mode-daily',
+      type: 'mode',
+      title: 'Daily Challenge',
+      category: 'Game Modes',
+      link: '/play',
+      addedAt: new Date().toISOString(),
+      iconName: 'Calendar',
+    },
+  ],
+  recentlyPlayed: [
+    {
+      id: 'recent-level-1',
+      type: 'level',
+      title: 'Level 1 - Starter Pour',
+      subtitle: 'Chapter 1: Beginner Glass',
+      timestamp: new Date().toISOString(),
+      stars: 3,
+      moves: 4,
+      completed: true,
+      levelId: 1,
+    },
+  ],
   claimedAchievements: [],
 };
 
@@ -86,6 +119,8 @@ export function loadUserProgress(): UserProgress {
       ...parsed,
       activeTheme,
       unlockedThemes,
+      favorites: Array.isArray(parsed.favorites) ? parsed.favorites : INITIAL_PROGRESS.favorites,
+      recentlyPlayed: Array.isArray(parsed.recentlyPlayed) ? parsed.recentlyPlayed : INITIAL_PROGRESS.recentlyPlayed,
       dailyChallenge: {
         ...INITIAL_PROGRESS.dailyChallenge,
         ...(parsed.dailyChallenge || {}),
@@ -284,3 +319,78 @@ export function resetUserProgress(): UserProgress {
   }
   return INITIAL_PROGRESS;
 }
+
+export function toggleFavoriteItem(
+  currentProgress: UserProgress,
+  item: { id: string; type: 'mode' | 'level' | 'article'; title: string; category?: string; link: string; iconName?: string }
+): { updatedProgress: UserProgress; isFavorited: boolean } {
+  const currentFavorites = currentProgress.favorites || [];
+  const exists = currentFavorites.some((f) => f.id === item.id);
+
+  let newFavorites;
+  if (exists) {
+    newFavorites = currentFavorites.filter((f) => f.id !== item.id);
+  } else {
+    newFavorites = [
+      {
+        ...item,
+        addedAt: new Date().toISOString(),
+      },
+      ...currentFavorites,
+    ];
+  }
+
+  const updatedProgress: UserProgress = {
+    ...currentProgress,
+    favorites: newFavorites,
+  };
+
+  saveUserProgress(updatedProgress);
+  return { updatedProgress, isFavorited: !exists };
+}
+
+export function isItemFavorited(progress: UserProgress, itemId: string): boolean {
+  return (progress.favorites || []).some((f) => f.id === itemId);
+}
+
+export function recordRecentlyPlayed(
+  currentProgress: UserProgress,
+  item: { id: string; type: 'level' | 'daily' | 'speedrun' | 'zen'; title: string; subtitle?: string; stars?: number; moves?: number; completed: boolean; levelId?: number }
+): UserProgress {
+  const currentRecents = currentProgress.recentlyPlayed || [];
+  const filtered = currentRecents.filter((r) => r.id !== item.id);
+  const newRecents = [
+    {
+      ...item,
+      timestamp: new Date().toISOString(),
+    },
+    ...filtered,
+  ].slice(0, 12); // Keep last 12
+
+  const updatedProgress: UserProgress = {
+    ...currentProgress,
+    recentlyPlayed: newRecents,
+  };
+
+  saveUserProgress(updatedProgress);
+  return updatedProgress;
+}
+
+export function toggleThemeMode(currentProgress: UserProgress): { updatedProgress: UserProgress; isDark: boolean } {
+  const newDarkMode = !currentProgress.darkMode;
+  const updatedProgress: UserProgress = {
+    ...currentProgress,
+    darkMode: newDarkMode,
+  };
+
+  saveUserProgress(updatedProgress);
+  if (typeof document !== 'undefined') {
+    if (newDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
+  return { updatedProgress, isDark: newDarkMode };
+}
+

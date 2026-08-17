@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="flaskGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+    <linearGradient id="liquidCyan" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee" />
+      <stop offset="100%" stop-color="#0891b2" />
+    </linearGradient>
+    <linearGradient id="liquidPurple" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc" />
+      <stop offset="100%" stop-color="#9333ea" />
+    </linearGradient>
+    <linearGradient id="liquidAmber" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+  <!-- Background rounded rect -->
+  <rect width="64" height="64" rx="16" fill="#090d16" />
+  <rect width="60" height="60" x="2" y="2" rx="14" fill="none" stroke="url(#flaskGrad)" stroke-width="2" stroke-opacity="0.6" />
+  
+  <!-- Test tube outline -->
+  <rect x="22" y="10" width="20" height="42" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="2.5" />
+  
+  <!-- Liquid layers -->
+  <!-- Bottom layer (Purple) -->
+  <path d="M 23 40 L 41 40 C 41 46 37 50.5 32 50.5 C 27 50.5 23 46 23 40 Z" fill="url(#liquidPurple)" />
+  <!-- Middle layer (Amber) -->
+  <rect x="23.2" y="28" width="17.6" height="12" fill="url(#liquidAmber)" />
+  <!-- Top layer (Cyan) -->
+  <rect x="23.2" y="18" width="17.6" height="10" fill="url(#liquidCyan)" />
+  
+  <!-- Highlight shine -->
+  <line x1="26" y1="16" x2="26" y2="44" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-opacity="0.5" />
+  <!-- Sparkle -->
+  <path d="M 46 16 L 48 20 L 52 22 L 48 24 L 46 28 L 44 24 L 40 22 L 44 20 Z" fill="#38bdf8" opacity="0.9" />
+</svg>

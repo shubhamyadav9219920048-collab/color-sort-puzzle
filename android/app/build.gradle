@@ -20,20 +20,24 @@ android {
 
     signingConfigs {
         release {
-            // Configure your keystore details in Android Studio or environment variables
-            // storeFile file('release-key.jks')
-            // storePassword process.env.RELEASE_STORE_PASSWORD
-            // keyAlias process.env.RELEASE_KEY_ALIAS
-            // keyPassword process.env.RELEASE_KEY_PASSWORD
+            if (System.getenv("RELEASE_STORE_FILE") != null) {
+                storeFile file(System.getenv("RELEASE_STORE_FILE"))
+                storePassword System.getenv("RELEASE_STORE_PASSWORD")
+                keyAlias System.getenv("RELEASE_KEY_ALIAS")
+                keyPassword System.getenv("RELEASE_KEY_PASSWORD")
+            } else {
+                // Fallback to debug keystore for CI builds
+                initWith(signingConfigs.debug)
+            }
         }
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
@@ -42,8 +46,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 }
 

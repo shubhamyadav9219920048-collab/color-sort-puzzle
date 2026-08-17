@@ -1,0 +1,19 @@
+{
+  "name": "Color Sort Puzzle 3D",
+  "short_name": "ColorSort3D",
+  "description": "Free online liquid water color sorting puzzle game with 100+ levels and soothing brain training challenges.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "64x64 128x128 256x256 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["games", "puzzle", "education"]
+}

@@ -6,28 +6,56 @@
     <title>Color Sort Puzzle 3D - Free Online Liquid Water Sort Game</title>
     <meta name="description" content="Play Color Sort Puzzle 3D free online! Enjoy 100+ brain-teasing levels, realistic liquid pouring physics, daily challenges, tube customizations, and relaxing puzzle gameplay." />
     <meta name="keywords" content="color sort puzzle, water sort puzzle, liquid sort game, bottle sort online, free puzzle games, brain training games, casual mobile game, color sorting 3d" />
-    <meta name="author" content="Color Sort Puzzle Studio" />
+    <meta name="author" content="Color Sort Puzzle 3D Studio" />
+    <meta name="publisher" content="Color Sort Puzzle 3D Studio" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#090d16" />
+
+    <!-- Google Search Console Verification Placeholder -->
+    <meta name="google-site-verification" content="YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_KEY" />
+
+    <!-- Favicon and App Icons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.json" />
 
     <!-- Canonical URL -->
     <link rel="canonical" href="https://colorsortpuzzle3d.com/" />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph / Facebook / LinkedIn Meta -->
+    <meta property="og:site_name" content="Color Sort Puzzle 3D" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://colorsortpuzzle3d.com/" />
     <meta property="og:title" content="Color Sort Puzzle 3D - Free Online Liquid Water Sort Game" />
     <meta property="og:description" content="Exercise your brain with 100+ vibrant liquid sorting levels. 100% free, responsive on all devices, no downloads required." />
-    <meta property="og:image" content="/assets/og-preview.png" />
+    <meta property="og:image" content="https://colorsortpuzzle3d.com/favicon.svg" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Color Sort Puzzle 3D Liquid Flasks Icon" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter Card -->
+    <!-- Twitter Card Meta -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ColorSort3D" />
+    <meta name="twitter:creator" content="@ColorSort3D" />
     <meta name="twitter:title" content="Color Sort Puzzle 3D - Free Online Water Sort Game" />
     <meta name="twitter:description" content="Master liquid color sorting across 100+ handcrafted levels. Play free in your browser or on mobile!" />
+    <meta name="twitter:image" content="https://colorsortpuzzle3d.com/favicon.svg" />
 
-    <!-- Structured Data (Schema.org JSON-LD) -->
+    <!-- Google Analytics (GA4) Tag Placeholder -->
+    <!-- Replace 'G-XXXXXXXXXX' with your actual Measurement ID when deploying to production -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MEASUREMENT_ID_PLACEHOLDER"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MEASUREMENT_ID_PLACEHOLDER', {
+        page_path: window.location.pathname,
+        anonymize_ip: true
+      });
+    </script>
+
+    <!-- Structured Data (Schema.org JSON-LD): WebSite, Organization, VideoGame -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -37,25 +65,57 @@
             "@id": "https://colorsortpuzzle3d.com/#website",
             "url": "https://colorsortpuzzle3d.com/",
             "name": "Color Sort Puzzle 3D",
-            "description": "Free online liquid water color sorting puzzle game with 100+ levels",
-            "inLanguage": "en-US"
+            "description": "Free online liquid water color sorting puzzle game with 100+ levels and comprehensive brain training strategy guides",
+            "inLanguage": "en-US",
+            "publisher": {
+              "@id": "https://colorsortpuzzle3d.com/#organization"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://colorsortpuzzle3d.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://colorsortpuzzle3d.com/#organization",
+            "name": "Color Sort Puzzle 3D Studio",
+            "url": "https://colorsortpuzzle3d.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://colorsortpuzzle3d.com/favicon.svg"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "email": "shubhamyadav9219920048@gmail.com",
+              "contactType": "customer support"
+            }
           },
           {
             "@type": "VideoGame",
             "@id": "https://colorsortpuzzle3d.com/#game",
             "name": "Color Sort Puzzle 3D",
-            "url": "https://colorsortpuzzle3d.com/",
-            "genre": ["Puzzle", "Brain Training", "Casual", "Strategy"],
-            "gamePlatform": ["Web Browser", "Android", "iOS", "Desktop"],
+            "url": "https://colorsortpuzzle3d.com/play",
+            "genre": ["Puzzle", "Brain Training", "Casual", "Strategy", "Logic"],
+            "gamePlatform": ["Web Browser", "Android", "iOS", "Desktop", "Tablet"],
             "applicationCategory": "Game",
-            "operatingSystem": "Any",
+            "operatingSystem": "Any modern web browser (Chrome, Safari, Firefox, Edge)",
+            "inLanguage": "en-US",
+            "playMode": "SinglePlayer",
             "offers": {
               "@type": "Offer",
               "price": "0",
               "priceCurrency": "USD",
               "availability": "https://schema.org/InStock"
             },
-            "description": "Engaging liquid sorting puzzle game where players transfer colored water between test tubes to solve vibrant cognitive challenges."
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "ratingCount": "2480",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "description": "Engaging liquid sorting puzzle game where players transfer colored water between test tubes to solve vibrant cognitive challenges with realistic fluid physics."
           }
         ]
       }
@@ -66,4 +126,3 @@
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-

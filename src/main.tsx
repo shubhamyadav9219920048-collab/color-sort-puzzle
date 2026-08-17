@@ -26,6 +26,7 @@ import { RecentlyPlayedPage } from './pages/RecentlyPlayedPage';
 import { GameStatsPage } from './pages/GameStatsPage';
 import { NewsPage } from './pages/NewsPage';
 import { TipsTricksPage } from './pages/TipsTricksPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 // Shared Components
 import { Header } from './components/Header';
@@ -205,8 +206,8 @@ export const RootApplication: React.FC = () => {
           <Route path="/cookies" element={<CookiePolicyPage />} />
           <Route path="/disclaimer" element={<DisclaimerPage />} />
 
-          {/* Catch-all Fallback */}
-          <Route path="*" element={<HomePage />} />
+          {/* Catch-all Fallback (404 Page) */}
+          <Route path="*" element={<NotFoundPage onOpenSearch={() => setIsSearchOpen(true)} />} />
         </Routes>
       </main>
 

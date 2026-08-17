@@ -1383,6 +1383,10 @@ export const BLOG_ARTICLES: BlogArticle[] = [
   ...BLOG_ARTICLES_MORE,
 ];
 
+export function getAllArticles(): BlogArticle[] {
+  return BLOG_ARTICLES;
+}
+
 export function getArticleBySlug(slug: string): BlogArticle | undefined {
   return BLOG_ARTICLES.find(
     (a) => a.slug.toLowerCase() === slug.toLowerCase() || a.id === slug

@@ -1,4 +1,30 @@
+# Robots.txt for Color Sort Puzzle 3D
+# Production SEO & Google AdSense optimized
+
 User-agent: *
 Allow: /
+Disallow: /search?*
+Disallow: /404
 
+# Google AdSense Crawler Directives
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+# Standard Search Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Canonical XML Sitemap
 Sitemap: https://colorsortpuzzle3d.com/sitemap.xml
